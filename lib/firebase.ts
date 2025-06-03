@@ -1,10 +1,9 @@
 // lib/firebase.ts
+import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { Platform } from 'react-native';
-import { getAuth } from 'firebase/auth';
-import { initializeApp, getApps, getApp } from 'firebase/app';
 
-let auth: ReturnType<typeof getAuth>;
+let auth: any; // یا Auth از 'firebase/auth'
 
 const firebaseConfig = {
   apiKey: "AIzaSyDnh1EUPJfAX1DznSoJqO4nVNyjnN1uXKM",
@@ -19,11 +18,9 @@ const firebaseConfig = {
 const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
 if (Platform.OS === 'web') {
-  // فقط روی وب
   const { getAuth } = require('firebase/auth');
   auth = getAuth(app);
 } else {
-  // روی موبایل
   const { initializeAuth, getReactNativePersistence } = require('firebase/auth/react-native');
   const AsyncStorage = require('@react-native-async-storage/async-storage').default;
   auth = initializeAuth(app, {
